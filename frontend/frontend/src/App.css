@@ -1,0 +1,216 @@
+/* =========================
+   GLOBAL APP STYLING
+========================= */
+.app {
+  font-family: Arial, sans-serif;
+  background: #f5f6f8;
+  min-height: 100vh;
+  padding: 20px;
+  color: #111; /* ALL TEXT BLACK */
+}
+
+/* HEADINGS */
+h1, h2, h3, p, div, span {
+  color: #111;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+section {
+  background: white;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   INPUTS
+========================= */
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-right: 8px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2196f3;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #111;
+  color: white;
+  transition: 0.2s;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* =========================
+   DRIVER + ORDER CARDS
+========================= */
+.order-card {
+  background: #fafafa;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+/* =========================
+   ROUTE BUTTONS
+========================= */
+.routes {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.route-btn {
+  background: #333;
+  color: white;
+}
+
+.route-btn:hover {
+  opacity: 0.8;
+}
+
+/* ACTIVE ROUTES */
+.active-a {
+  background: #00c853 !important;
+  color: white;
+  font-weight: bold;
+}
+
+.active-b {
+  background: #2196f3 !important;
+  color: white;
+  font-weight: bold;
+}
+
+.active-c {
+  background: #ffeb3b !important;
+  color: black;
+  font-weight: bold;
+}
+
+/* SELECTED TEXT */
+.selected {
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+/* =========================
+   MAP SECTION
+========================= */
+.leaflet-container {
+  height: 400px;
+  width: 100%;
+  border-radius: 12px;
+}
+.app {
+  font-family: Arial, sans-serif;
+  background: #0f0f0f;
+  color: white;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.title {
+  color: white;
+  font-size: 26px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #1a1a1a;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  width: 200px;
+}
+
+button {
+  padding: 10px 12px;
+  margin: 5px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* 🚀 ORDER CARD */
+.order-card {
+  background: #222;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 12px;
+}
+
+.route-title {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+/* GRID LIKE UBER */
+.route-grid {
+  display: flex;
+  gap: 10px;
+}
+
+/* ROUTE CARDS */
+.route-card {
+  flex: 1;
+  padding: 12px;
+  border-radius: 10px;
+  background: #333;
+  color: white;
+  transition: 0.2s;
+}
+
+.route-card:hover {
+  transform: scale(1.05);
+}
+
+/* COLORS */
+.green.active {
+  background: #00c853;
+  color: black;
+}
+
+.blue.active {
+  background: #2196f3;
+  color: black;
+}
+
+.yellow.active {
+  background: #ffeb3b;
+  color: black;
+}
+
+/* SELECTED TEXT */
+.selected {
+  margin-top: 8px;
+  opacity: 0.8;
+}
+html, body, #root {
+  height: 100%;
+}
