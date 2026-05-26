@@ -240,7 +240,7 @@ if (!start || !end) continue;
     };
 
     draw();
-  }, [orders, selectedRoutes]);
+  }, [orders, selectedRoutes, geoData]);
 
   // ---------------- MARKERS ----------------
   useEffect(() => {
