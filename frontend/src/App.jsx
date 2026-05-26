@@ -39,6 +39,10 @@ export default function App() {
   const [ratings, setRatings] = useState({});
   const [reviews, setReviews] = useState({});
 
+ const [geoData, setGeoData] = useState({});
+
+ const [phone, setPhone] = useState("");
+ const [email, setEmail] = useState("");
 
   // ---------------- COLORS ----------------
   const routeColors = {
@@ -48,15 +52,17 @@ export default function App() {
   };
 
   // ---------------- FETCH ----------------
-  const fetchOrders = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/orders");
-    setOrders(res.data);
-  };
+  const API_BASE = "https://delivery-optimizer-wwx8.onrender.com";
 
-  const fetchDrivers = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/drivers");
-    setDrivers(res.data || []);
-  };
+const fetchOrders = async () => {
+  const res = await axios.get(`${API_BASE}/orders`);
+  setOrders(res.data);
+};
+
+const fetchDrivers = async () => {
+  const res = await axios.get(`${API_BASE}/drivers`);
+  setDrivers(res.data || []);
+};
 
   useEffect(() => {
     fetchOrders();
@@ -86,19 +92,12 @@ useEffect(() => {
  const geocode = async (address) => {
   if (!address) return null;
 
-  if (geoCache.has(address)) return geoCache.get(address);
-
-  // 🚨 prevent duplicate simultaneous calls
-  if (geoInProgress.has(address)) {
-    while (geoInProgress.has(address)) {
-      await new Promise((r) => setTimeout(r, 50));
-    }
+  if (geoCache.has(address)) {
     return geoCache.get(address);
   }
 
-  geoInProgress.add(address);
-
-  try {
+  // 🚨 FORCE requests to run ONE AT A TIME
+  geoQueue = geoQueue.then(async () => {
     const res = await fetch(
       `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`
     );
@@ -113,14 +112,10 @@ useEffect(() => {
     ];
 
     geoCache.set(address, coords);
-
     return coords;
-  } catch (err) {
-    console.log("GEOCODE ERROR:", err);
-    return null;
-  } finally {
-    geoInProgress.delete(address);
-  }
+  });
+
+  return geoQueue;
 };
   // ---------------- ROUTING ----------------
   const getRoute = async (start, end, type) => {
@@ -178,6 +173,35 @@ useEffect(() => {
     }
   };
 
+  useEffect(() => {
+  const loadGeo = async () => {
+    const result = {};
+
+    for (const o of orders) {
+      const keyPickup = o.pickup_address;
+      const keyDrop = o.dropoff_address;
+
+      if (!geoCache.has(keyPickup)) {
+        const res1 = await geocode(keyPickup);
+        if (res1) geoCache.set(keyPickup, res1);
+      }
+
+      if (!geoCache.has(keyDrop)) {
+        const res2 = await geocode(keyDrop);
+        if (res2) geoCache.set(keyDrop, res2);
+      }
+
+      result[o.id] = {
+        start: geoCache.get(keyPickup),
+        end: geoCache.get(keyDrop),
+      };
+    }
+
+    setGeoData(result);
+  };
+
+  if (orders.length) loadGeo();
+}, [orders]);
   // ---------------- DRAW ROUTES ----------------
   useEffect(() => {
     if (!mapInstance.current) return;
@@ -192,10 +216,10 @@ useEffect(() => {
       for (const o of orders) {
         const type = selectedRoutes[o.id] || o.route_type || "A";
 
-        const start = await geocode(o.pickup_address);
-        const end = await geocode(o.dropoff_address);
+      const start = geoData[o.id]?.start;
+      const end = geoData[o.id]?.end;
 
-        if (!start || !end) continue;
+if (!start || !end) continue;   
 
         const path = await getRoute(start, end, type);
 
@@ -220,38 +244,33 @@ useEffect(() => {
 
   // ---------------- MARKERS ----------------
   useEffect(() => {
-    if (!mapInstance.current) return;
+  if (!mapInstance.current) return;
 
-    markerLayers.current.forEach((m) =>
-      mapInstance.current.removeLayer(m)
-    );
-    markerLayers.current = [];
+  markerLayers.current.forEach((m) =>
+    mapInstance.current.removeLayer(m)
+  );
+  markerLayers.current = [];
 
-    const draw = async () => {
-      for (const o of orders) {
-        const start = await geocode(o.pickup_address);
-        const end = await geocode(o.dropoff_address);
+  for (const o of orders) {
+    const geo = geoData[o.id];
 
-        if (start) {
-          markerLayers.current.push(
-            L.marker(start)
-              .addTo(mapInstance.current)
-              .bindPopup("Pickup")
-          );
-        }
+    if (geo?.start) {
+      markerLayers.current.push(
+        L.marker(geo.start)
+          .addTo(mapInstance.current)
+          .bindPopup("Pickup")
+      );
+    }
 
-        if (end) {
-          markerLayers.current.push(
-            L.marker(end)
-              .addTo(mapInstance.current)
-              .bindPopup("Dropoff")
-          );
-        }
-      }
-    };
-
-    draw();
-  }, [orders]);
+    if (geo?.end) {
+      markerLayers.current.push(
+        L.marker(geo.end)
+          .addTo(mapInstance.current)
+          .bindPopup("Dropoff")
+      );
+    }
+  }
+}, [geoData]);
 
   // ---------------- CREATE ORDER ----------------
   const createOrder = async () => {
@@ -261,6 +280,9 @@ useEffect(() => {
       pickup_address: pickup,
       dropoff_address: dropoff,
       service_type: serviceType,
+
+      phone: phone,
+      email: email,
     });
 
     setPickup("");
@@ -334,6 +356,20 @@ return (
         placeholder="Dropoff"
         style={{ width: "100%", padding: 10, marginBottom: 10 }}
       />
+
+<input
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+  placeholder="Phone number for delivery updates"
+  style={{ width: "100%", padding: 10, marginBottom: 10 }}
+/>
+
+<input
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder="Email (optional)"
+  style={{ width: "100%", padding: 10, marginBottom: 10 }}
+/>
 
       <button onClick={createOrder} style={{ width: "100%", padding: 10 }}>
         Add Order

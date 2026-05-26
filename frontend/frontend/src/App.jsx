@@ -41,6 +41,9 @@ export default function App() {
 
  const [geoData, setGeoData] = useState({});
 
+ const [phone, setPhone] = useState("");
+ const [email, setEmail] = useState("");
+
   // ---------------- COLORS ----------------
   const routeColors = {
     A: "red",
@@ -49,15 +52,17 @@ export default function App() {
   };
 
   // ---------------- FETCH ----------------
-  const fetchOrders = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/orders");
-    setOrders(res.data);
-  };
+  const API_BASE = "https://delivery-optimizer-wwx8.onrender.com";
 
-  const fetchDrivers = async () => {
-    const res = await axios.get("http://127.0.0.1:8000/drivers");
-    setDrivers(res.data || []);
-  };
+const fetchOrders = async () => {
+  const res = await axios.get(`${API_BASE}/orders`);
+  setOrders(res.data);
+};
+
+const fetchDrivers = async () => {
+  const res = await axios.get(`${API_BASE}/drivers`);
+  setDrivers(res.data || []);
+};
 
   useEffect(() => {
     fetchOrders();
@@ -275,6 +280,9 @@ if (!start || !end) continue;
       pickup_address: pickup,
       dropoff_address: dropoff,
       service_type: serviceType,
+
+      phone: phone,
+      email: email,
     });
 
     setPickup("");
@@ -348,6 +356,20 @@ return (
         placeholder="Dropoff"
         style={{ width: "100%", padding: 10, marginBottom: 10 }}
       />
+
+<input
+  value={phone}
+  onChange={(e) => setPhone(e.target.value)}
+  placeholder="Phone number for delivery updates"
+  style={{ width: "100%", padding: 10, marginBottom: 10 }}
+/>
+
+<input
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder="Email (optional)"
+  style={{ width: "100%", padding: 10, marginBottom: 10 }}
+/>
 
       <button onClick={createOrder} style={{ width: "100%", padding: 10 }}>
         Add Order
