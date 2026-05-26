@@ -3,6 +3,8 @@ import axios from "axios";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+let geoQueue = Promise.resolve();
+
 // Fix Leaflet icons
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -19,7 +21,7 @@ export default function App() {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
 
-  const geoCache = new Map();
+  const geoCache = useRef(new Map()).current;
   const geoInProgress = new Set();
   const routeLayers = useRef([]);
   const markerLayers = useRef([]);
@@ -173,27 +175,22 @@ useEffect(() => {
     }
   };
 
-  useEffect(() => {
+ useEffect(() => {
   const loadGeo = async () => {
     const result = {};
 
     for (const o of orders) {
-      const keyPickup = o.pickup_address;
-      const keyDrop = o.dropoff_address;
+      const pickupAddr = o.pickup_address;
+      const dropAddr = o.dropoff_address;
 
-      if (!geoCache.has(keyPickup)) {
-        const res1 = await geocode(keyPickup);
-        if (res1) geoCache.set(keyPickup, res1);
-      }
+      const start = await geocode(pickupAddr);
+      const end = await geocode(dropAddr);
 
-      if (!geoCache.has(keyDrop)) {
-        const res2 = await geocode(keyDrop);
-        if (res2) geoCache.set(keyDrop, res2);
-      }
+      if (!start || !end) continue;
 
       result[o.id] = {
-        start: geoCache.get(keyPickup),
-        end: geoCache.get(keyDrop),
+        start,
+        end,
       };
     }
 
@@ -205,6 +202,7 @@ useEffect(() => {
   // ---------------- DRAW ROUTES ----------------
   useEffect(() => {
     if (!mapInstance.current) return;
+    if (!orders.length || !Object.keys(geoData).length) return;
 
     const draw = async () => {
       // clear old lines
