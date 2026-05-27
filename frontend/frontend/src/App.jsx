@@ -54,7 +54,7 @@ export default function App() {
   };
 
   // ---------------- FETCH ----------------
-  const API_BASE = "https://delivery-optimizer-wwx8.onrender.com";
+  const API_BASE = "http://127.0.0.1:8000";
 
 const fetchOrders = async () => {
   const res = await axios.get(`${API_BASE}/orders`);
@@ -70,7 +70,13 @@ const fetchDrivers = async () => {
     fetchOrders();
     fetchDrivers();
   }, []);
-
+  
+useEffect(() => {
+  console.log("TEST API CALL");
+  axios.get(`${API_BASE}/orders`)
+    .then(res => console.log("ORDERS:", res.data))
+    .catch(err => console.log("ERROR:", err));
+}, []);
   // ---------------- MAP INIT ----------------
   
 useEffect(() => {
@@ -285,7 +291,7 @@ if (!start || !end) continue;
   const createOrder = async () => {
     if (!pickup || !dropoff) return;
 
-    await axios.post("http://127.0.0.1:8000/orders", {
+    await axios.post(`${API_BASE}/orders`, {
       pickup_address: pickup,
       dropoff_address: dropoff,
       service_type: serviceType,
@@ -306,7 +312,7 @@ if (!start || !end) continue;
       [orderId]: type,
     }));
 
-    await axios.post("http://127.0.0.1:8000/select-route", {
+    await axios.post(`${API_BASE}/select-route`, {
       order_id: orderId,
       route_type: type,
     });
@@ -329,7 +335,7 @@ const assignDriver = async (orderId) => {
     return;
   }
 
-  await axios.post("http://127.0.0.1:8000/assign-driver", {
+  await axios.post(`${API_BASE}/assign-driver`, {
     order_id: orderId,
     driver_id: Number(driverId),
   });
@@ -579,7 +585,7 @@ return (
           <button
             onClick={async () => {
               await axios.post(
-                `http://127.0.0.1:8000/orders/${o.id}/review`,
+                `${API_BASE}/orders/${o.id}/review`,
                 {
                   rating: ratings[o.id],
                   review: reviews[o.id],
