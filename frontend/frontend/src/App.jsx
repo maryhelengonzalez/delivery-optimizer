@@ -408,6 +408,13 @@ return (
           <p><b>Dropoff:</b> {o.dropoff_address}</p>
 
           <p><b>Service:</b> {o.service_type}</p>
+          {o.phone && (
+  <p><b>Phone:</b> {o.phone}</p>
+)}
+
+{o.email && (
+  <p><b>Email:</b> {o.email}</p>
+)}
 
           {/* TIMESTAMPS */}
           <p>
