@@ -21,14 +21,14 @@ export default function App() {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
 
-  const geoCache = useRef(new Map()).current;
-  const geoInProgress = new Set();
   const routeLayers = useRef([]);
   const markerLayers = useRef([]);
-  
 
   const [orders, setOrders] = useState([]);
   const [drivers, setDrivers] = useState([]);
+
+  const geoCache = useRef(new Map()).current;
+  const geoInProgress = new Set();
 
   const [selectedRoutes, setSelectedRoutes] = useState({});
   const [selectedDriver, setSelectedDriver] = useState({});
@@ -100,11 +100,21 @@ useEffect(() => {
 
   // 🚨 FORCE requests to run ONE AT A TIME
   geoQueue = geoQueue.then(async () => {
-    const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&limit=1&q=${encodeURIComponent(address)}`
+    const res = await axios.get(
+      "https://nominatim.openstreetmap.org/search",
+      {
+        params: {
+          format: "json",
+          limit: 1,
+          q: address,
+        },
+        headers: {
+          "Accept-Language": "en",
+        },
+      }
     );
 
-    const data = await res.json();
+    const data = res.data;
 
     if (!data?.length) return null;
 
@@ -114,6 +124,7 @@ useEffect(() => {
     ];
 
     geoCache.set(address, coords);
+
     return coords;
   });
 
@@ -302,7 +313,11 @@ if (!start || !end) continue;
   };
 
   const deleteOrder = async (orderId) => {
-  await axios.delete(`http://127.0.0.1:8000/orders/${orderId}`);
+  console.log("Deleting order:", orderId);
+
+  await axios.delete(`${API_BASE}/orders/${orderId}`);
+
+  console.log("Deleted, refetching...");
   fetchOrders();
 };
   // ---------------- ASSIGN DRIVER ----------------
@@ -489,19 +504,23 @@ return (
             Assign Driver
           </button>
 
-          {/* DELETE BUTTON */}
-          <button
-            onClick={() => deleteOrder(o.id)}
-            style={{
-              width: "100%",
-              marginTop: 10,
-              padding: 8,
-              background: "red",
-              color: "white",
-            }}
-          >
-            Delete Order
-          </button>
+         <button
+  onClick={() => {
+    console.log("🧨 CLICKED ORDER OBJECT:", o);
+    console.log("🧨 ID BEING SENT:", o.id);
+
+    deleteOrder(o.id);
+  }}
+  style={{
+    width: "100%",
+    marginTop: 10,
+    padding: 8,
+    background: "red",
+    color: "white",
+  }}
+>
+  Delete Order
+</button>
 
           {/* STATUS */}
           <p>

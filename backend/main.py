@@ -5,6 +5,7 @@ import requests
 
 import models
 from database import SessionLocal, engine, Base
+from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 
@@ -15,11 +16,14 @@ app = FastAPI()
 # ================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
 # ================================
 # DATABASE
 # ================================
@@ -284,16 +288,27 @@ def assign_driver(data: dict, db: Session = Depends(get_db)):
 @app.delete("/orders/{order_id}")
 def delete_order(order_id: int, db: Session = Depends(get_db)):
 
+    print("🔥 DELETE REQUEST RECEIVED:", order_id)
+
     order = (
         db.query(models.Order)
         .filter(models.Order.id == order_id)
         .first()
     )
 
+    print("FOUND ORDER:", order)
+
     if not order:
+        print("❌ ORDER NOT FOUND")
         return {"error": "not found"}
 
     db.delete(order)
     db.commit()
 
+    print("✅ ORDER DELETED")
+
     return {"ok": True}
+@app.get("/debug-orders")
+def debug_orders(db: Session = Depends(get_db)):
+    orders = db.query(models.Order).all()
+    return orders
