@@ -54,7 +54,7 @@ export default function App() {
   };
 
   // ---------------- FETCH ----------------
-  const API_BASE = "https://delivery-optimizer-wwx8.onrender.com";
+  const API_BASE = import.meta.env.VITE_API_BASE;
 
 const fetchOrders = async () => {
   const res = await axios.get(`${API_BASE}/orders`);
