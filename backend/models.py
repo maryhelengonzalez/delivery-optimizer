@@ -27,6 +27,9 @@ class Order(Base):
     driver_id = Column(Integer, nullable=True)
 
     # ⭐ ADD THESE (IMPORTANT)
+    phone = Column(String, nullable=True)
+    email = Column(String, nullable=True)
+
     rating = Column(Integer, nullable=True)
     review = Column(String, nullable=True)
 

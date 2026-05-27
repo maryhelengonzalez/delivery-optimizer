@@ -159,6 +159,8 @@ def create_order(data: dict, db: Session = Depends(get_db)):
         status="pending",
         route_type="A",
         driver_id=None,
+        phone=data.get("phone"),
+        email=data.get("email"),
     )
 
     db.add(order)
@@ -166,13 +168,18 @@ def create_order(data: dict, db: Session = Depends(get_db)):
     db.refresh(order)
 
     return {
-        "id": order.id,
-        "pickup_address": order.pickup_address,
-        "dropoff_address": order.dropoff_address,
-        "route_type": order.route_type,
-        "status": order.status,
-        "driver_id": order.driver_id,
-    }
+    "id": order.id,
+    "pickup_address": order.pickup_address,
+    "dropoff_address": order.dropoff_address,
+    "service_type": order.service_type,
+    "route_type": order.route_type,
+    "status": order.status,
+    "driver_id": order.driver_id,
+    "created_at": order.created_at,
+    "updated_at": order.updated_at,
+    "phone": order.phone,
+    "email": order.email,
+}
 
 
 # ================================
@@ -196,6 +203,8 @@ def get_orders(db: Session = Depends(get_db)):
             "updated_at": o.updated_at,
             "rating": o.rating,
             "review": o.review,
+            "phone": o.phone,
+            "email": o.email,
         }
         for o in orders
     ]
