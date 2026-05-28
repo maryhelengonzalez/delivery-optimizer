@@ -57,11 +57,15 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 
 This project was built with the goal of unifying multiple logistics services into a single, streamlined platform instead of relying on separate applications for ordering, driver assignment, and route management.
 
-The system allows users to place and manage orders, select preferred routes, and track driver assignment in real time through clear status updates (e.g., pending → assigned → in-progress → completed). This ensures full visibility and confirmation that a driver has been successfully assigned and is actively handling the request.
+The system allows users to place and manage orders, select preferred routes, and track driver assignment in real time through clear status updates (such as pending → assigned → in-progress → completed). This provides full transparency and confirmation that a driver has been successfully assigned and is actively handling the request.
+
+Users also have the ability to update or delete an order if a mistake was made, giving them flexibility and control over their requests before or during processing.
 
 In addition, the platform supports user contact integration, allowing users to provide their phone number or email so they can receive updates and confirmations once a driver arrives or a service is in progress.
 
-Overall, the purpose is to centralize and simplify the entire delivery experience into one cohesive system where users can control, track, and communicate within a single application rather than fragmented tools.
+Finally, after completing a service, users can rate their experience, helping provide feedback on service quality and overall system performance.
+
+Overall, the purpose of this project is to centralize and simplify the entire delivery experience into one cohesive system where users can control, track, communicate, and evaluate services within a single application rather than fragmented tools.
 
 📌 Future Improvements
 AI powered route optimization
