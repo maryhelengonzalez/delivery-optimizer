@@ -38,24 +38,7 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 ⚡ Scalable architecture for city-level logistics simulation
 🧠 Intelligent dispatch logic (assignment system)
 🛠 Tech Stack
-React.js
-JavaScript (ES6+)
-Leaflet.js (maps & geolocation)
-Axios (API requests)
-Node.js / Express (backend API)
-WebSockets or polling (real-time updates)
-CSS3 / modern UI styling
-📂 Project Structure
-delivery-optimizer/
-├── backend/
-├── frontend/
-├── screenshots/
-│   ├── screenshot1.png
-│   ├── screenshot2.jpg
-│   ├── screenshot3.jpg
-│   └── screenshot9.jpg
-├── package.json
-└── README.md
+
 🎯 Purpose
 
 This project was built to simulate a real-world logistics and dispatch control system used in modern delivery platforms.
