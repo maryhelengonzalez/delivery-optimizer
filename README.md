@@ -5,8 +5,8 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 
 🚀 Live Demo
 
-👉 (Add your deployed link here if you have one — Vercel / Netlify / Render)
-
+ <a href="https://delivery-optimizer-two.vercel.app" target="_blank" rel="noreferrer" style={styles.link}>
+   
 📸 Project Preview
 🗺️ Live Map Dashboard
 
