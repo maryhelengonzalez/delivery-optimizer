@@ -7,21 +7,22 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 "https://delivery-optimizer-two.vercel.app" 
    
 📸 Project Preview
-🗺️ Live Map Dashboard
+## 📸 Project Preview
 
+### Dashboard View
+![Dashboard](./screenshots/screenshot1.png)
+![Dashboard](./screenshots/screenshot2.jpg)
+![Dashboard](./screenshots/screenshot3.jpg)
 
+### Routes & Tracking
+![Routes](./screenshots/screenshot4.jpg)
+![Routes](./screenshots/screenshot5.jpg)
+![Routes](./screenshots/screenshot6.jpg)
 
-
-
-
-🚚 Driver & Route Tracking
-
-
-
-
-
-
-📦 Order Dispatch System
+### Orders & Dispatch
+![Orders](./screenshots/screenshot7.jpg)
+![Orders](./screenshots/screenshot8.jpg)
+![Orders](./screenshots/screenshot9.jpg)
 
 
 
