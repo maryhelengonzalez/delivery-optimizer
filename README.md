@@ -1,6 +1,6 @@
-🚚 Real-Time Smart Delivery Dispatch System
+🚚 Real Time Smart Delivery Dispatch System
 
-A real-time logistics and delivery optimization platform that tracks drivers, orders, and routes on an interactive map.
+A real time logistics and delivery optimization platform that tracks drivers, orders, and routes on an interactive map.
 This system simulates how modern delivery platforms (like DoorDash or Uber Eats) coordinate logistics, dispatching, and live tracking in real time.
 
 🚀 Live Demo
@@ -44,32 +44,29 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 
 
 🧠 Key Features
-🚚 Real-time driver tracking on interactive map
+🚚 Real time driver tracking on interactive map
 📦 Dynamic order assignment system
-🗺️ Leaflet-based map visualization
+🗺️ Leaflet based map visualization
 🔄 Live updates for driver movement & status changes
 📍 Route visualization between pickup and drop-off points
-⚡ Scalable architecture for city-level logistics simulation
+⚡ Scalable architecture for city level logistics simulation
 🧠 Intelligent dispatch logic (assignment system)
 🛠 Tech Stack
 
 🎯 Purpose
 
-This project was built to simulate a real-world logistics and dispatch control system used in modern delivery platforms.
+This project was built with the goal of unifying multiple logistics services into a single, streamlined platform instead of relying on separate applications for ordering, driver assignment, and route management.
 
-It focuses on:
+The system allows users to place and manage orders, select preferred routes, and track driver assignment in real time through clear status updates (e.g., pending → assigned → in-progress → completed). This ensures full visibility and confirmation that a driver has been successfully assigned and is actively handling the request.
 
-Managing moving assets (drivers)
-Assigning and tracking orders in real time
-Visualizing routes and system activity on a map
-Understanding how large-scale delivery systems coordinate operations
+In addition, the platform supports user contact integration, allowing users to provide their phone number or email so they can receive updates and confirmations once a driver arrives or a service is in progress.
 
-The goal is to demonstrate skills in real-time systems, mapping visualization, and full-stack coordination logic.
+Overall, the purpose is to centralize and simplify the entire delivery experience into one cohesive system where users can control, track, and communicate within a single application rather than fragmented tools.
 
 📌 Future Improvements
-AI-powered route optimization
+AI powered route optimization
 Predictive delivery time estimation
-WebSocket upgrade for true real-time streaming
+WebSocket upgrade for true real time streaming
 Authentication system (admin / driver / dispatcher roles)
 Mobile app version (React Native)
 Cloud deployment + scaling improvements
