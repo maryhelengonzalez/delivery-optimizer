@@ -4,8 +4,7 @@ A real-time logistics and delivery optimization platform that tracks drivers, or
 This system simulates how modern delivery platforms (like DoorDash or Uber Eats) coordinate logistics, dispatching, and live tracking in real time.
 
 🚀 Live Demo
-
- <a href="https://delivery-optimizer-two.vercel.app" target="_blank" rel="noreferrer" style={styles.link}>
+"https://delivery-optimizer-two.vercel.app" 
    
 📸 Project Preview
 🗺️ Live Map Dashboard
