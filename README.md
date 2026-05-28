@@ -9,20 +9,34 @@ This system simulates how modern delivery platforms (like DoorDash or Uber Eats)
 📸 Project Preview
 ## 📸 Project Preview
 
-### Dashboard View
-![Dashboard](./screenshots/screenshot1.png)
-![Dashboard](./screenshots/screenshot2.jpg)
-![Dashboard](./screenshots/screenshot3.jpg)
+### Delivery Dispatch App View
 
-### Routes & Tracking
-![Routes](./screenshots/screenshot4.jpg)
-![Routes](./screenshots/screenshot5.jpg)
+![Orders](./screenshots/screenshot9.jpg)
+
+![Orders](./screenshots/screenshot8.jpg)
+
+![Orders](./screenshots/screenshot7.jpg)
+
 ![Routes](./screenshots/screenshot6.jpg)
 
-### Orders & Dispatch
-![Orders](./screenshots/screenshot7.jpg)
-![Orders](./screenshots/screenshot8.jpg)
-![Orders](./screenshots/screenshot9.jpg)
+![Routes](./screenshots/screenshot5.jpg)
+
+![Routes](./screenshots/screenshot4.jpg)
+
+
+![Dashboard](./screenshots/screenshot3.jpg)
+
+![Dashboard](./screenshots/screenshot2.jpg)
+
+![Dashboard](./screenshots/screenshot1.png)
+
+
+
+
+
+
+
+
 
 
 
